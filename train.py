@@ -4,6 +4,7 @@ import hyperparameters
 import tokenizer
 import os
 import tensorflow as tf
+from tensorboard_output import Metrics
 from tensorflow import keras
 from datetime import datetime
 
@@ -124,7 +125,7 @@ args = hyperparameters.args
 model = BERT_model.create_model(
     args['bert_model_name'], args['label_num'])
 model.fit(train_x, train_y, epochs=args["epoch"], verbose=1,
-          callbacks=[tensorboard_callback],
+          callbacks=[Metrics(valid_data=(val_x, val_y)), tensorboard_callback],
           batch_size=args["batch_size"],
           validation_data=(val_x, val_y),
           validation_batch_size=args["batch_size"])
