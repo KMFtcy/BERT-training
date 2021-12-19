@@ -68,6 +68,7 @@ classes = [
 def create_f1():
     def f1_function(y_true, y_pred):
         y_pred_binary = tf.where(y_pred >= 0.5, 1., 0.)
+        y_true = tf.cast(y_true, dtype=tf.float32)
         tp = tf.reduce_sum(y_true * y_pred_binary)
         predicted_positives = tf.reduce_sum(y_pred_binary)
         possible_positives = tf.reduce_sum(y_true)
